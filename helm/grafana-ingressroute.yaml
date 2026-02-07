@@ -8,7 +8,7 @@ spec:
     - web
   routes:
     - kind: Rule
-      match: Host(`grafana.arnabsaha.com`)
+      match: Host(`o11y.arnabsaha.com`)
       services:
         - name: kube-prometheus-stack-grafana
           port: 80
