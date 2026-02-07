@@ -33,9 +33,6 @@ grafana:
   grafana.ini:
     server:
       root_url: https://grafana.arnabsaha.com
-    # Mobile-friendly settings
-    dashboards:
-      default_home_dashboard_path: /var/lib/grafana/dashboards/default/cluster-overview.json
     unified_alerting:
       enabled: true
 

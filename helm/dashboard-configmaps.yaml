@@ -1,0 +1,295 @@
+# Dashboard ConfigMaps for Grafana sidecar
+# These are loaded automatically by the Grafana sidecar
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dashboard-cluster-overview
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  cluster-overview.json: |
+    {
+      "annotations": { "list": [] },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "links": [],
+      "liveNow": false,
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "mappings": [],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 4, "w": 8, "x": 0, "y": 0 },
+          "id": 1,
+          "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+          "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)", "refId": "A" }],
+          "title": "CPU Usage",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "mappings": [],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 4, "w": 8, "x": 8, "y": 0 },
+          "id": 2,
+          "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+          "targets": [{ "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100", "refId": "A" }],
+          "title": "Memory Usage",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "mappings": [],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 4, "w": 8, "x": 16, "y": 0 },
+          "id": 3,
+          "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+          "targets": [{ "expr": "count(kube_pod_status_phase{phase=\"Running\"})", "refId": "A" }],
+          "title": "Running Pods",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "barAlignment": 0, "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "smooth", "lineWidth": 2, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } },
+              "mappings": [],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+          "id": 4,
+          "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+          "targets": [
+            { "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)", "legendFormat": "CPU", "refId": "A" },
+            { "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100", "legendFormat": "Memory", "refId": "B" }
+          ],
+          "title": "CPU & Memory Over Time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "barAlignment": 0, "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "smooth", "lineWidth": 2, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } },
+              "mappings": [],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] },
+              "unit": "Bps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
+          "id": 5,
+          "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+          "targets": [
+            { "expr": "sum(rate(node_network_receive_bytes_total{device!~\"lo|veth.*|docker.*|br-.*|cni.*|flannel.*\"}[5m]))", "legendFormat": "Receive", "refId": "A" },
+            { "expr": "sum(rate(node_network_transmit_bytes_total{device!~\"lo|veth.*|docker.*|br-.*|cni.*|flannel.*\"}[5m]))", "legendFormat": "Transmit", "refId": "B" }
+          ],
+          "title": "Network I/O",
+          "type": "timeseries"
+        }
+      ],
+      "refresh": "30s",
+      "schemaVersion": 38,
+      "tags": ["k3s", "overview", "mobile"],
+      "templating": { "list": [] },
+      "time": { "from": "now-1h", "to": "now" },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "Cluster Overview",
+      "uid": "cluster-overview",
+      "version": 1
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dashboard-apps
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  apps-dashboard.json: |
+    {
+      "annotations": { "list": [] },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "links": [],
+      "panels": [
+        {
+          "gridPos": { "h": 2, "w": 24, "x": 0, "y": 0 },
+          "id": 100,
+          "options": { "content": "# 📊 Application Status", "mode": "markdown" },
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "mappings": [
+                { "options": { "0": { "color": "red", "text": "Down" }, "1": { "color": "green", "text": "Running" } }, "type": "value" }
+              ],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 3, "w": 8, "x": 0, "y": 2 },
+          "id": 1,
+          "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+          "targets": [{ "expr": "kube_pod_status_phase{namespace=\"apps\", pod=~\"note-rag-api.*\", phase=\"Running\"}", "refId": "A" }],
+          "title": "📝 Note-RAG",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "mappings": [
+                { "options": { "0": { "color": "red", "text": "Down" }, "1": { "color": "green", "text": "Running" } }, "type": "value" }
+              ],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 3, "w": 8, "x": 8, "y": 2 },
+          "id": 2,
+          "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+          "targets": [{ "expr": "kube_pod_status_phase{namespace=\"apps\", pod=~\"portfolio-tracker-backend.*\", phase=\"Running\"}", "refId": "A" }],
+          "title": "📈 Portfolio Tracker",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "mappings": [
+                { "options": { "0": { "color": "red", "text": "Down" }, "1": { "color": "green", "text": "Running" } }, "type": "value" }
+              ],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 3, "w": 8, "x": 16, "y": 2 },
+          "id": 3,
+          "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+          "targets": [{ "expr": "kube_pod_status_phase{namespace=\"apps\", pod=~\"n8n.*\", phase=\"Running\"}", "refId": "A" }],
+          "title": "🔧 n8n",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "barAlignment": 0, "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "smooth", "lineWidth": 2, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } },
+              "mappings": [],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] },
+              "unit": "bytes"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 5 },
+          "id": 4,
+          "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+          "targets": [
+            { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"note-rag-api.*\", container!=\"\"}) by (pod)", "legendFormat": "note-rag", "refId": "A" },
+            { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"portfolio-tracker-backend.*\", container!=\"\"}) by (pod)", "legendFormat": "portfolio", "refId": "B" },
+            { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"n8n.*\", container!=\"\"}) by (pod)", "legendFormat": "n8n", "refId": "C" },
+            { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"note-rag-ollama.*\", container!=\"\"}) by (pod)", "legendFormat": "ollama", "refId": "D" }
+          ],
+          "title": "Memory Usage",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "axisCenteredZero": false, "axisColorMode": "text", "axisLabel": "", "axisPlacement": "auto", "barAlignment": 0, "drawStyle": "line", "fillOpacity": 10, "gradientMode": "none", "hideFrom": { "legend": false, "tooltip": false, "viz": false }, "lineInterpolation": "smooth", "lineWidth": 2, "pointSize": 5, "scaleDistribution": { "type": "linear" }, "showPoints": "never", "spanNulls": false, "stacking": { "group": "A", "mode": "none" }, "thresholdsStyle": { "mode": "off" } },
+              "mappings": [],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 5 },
+          "id": 5,
+          "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
+          "targets": [
+            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"note-rag-api.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "note-rag", "refId": "A" },
+            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"portfolio-tracker-backend.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "portfolio", "refId": "B" },
+            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"n8n.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "n8n", "refId": "C" },
+            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"note-rag-ollama.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "ollama", "refId": "D" }
+          ],
+          "title": "CPU Usage (millicores)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "mappings": [],
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 3 }, { "color": "red", "value": 5 }] }
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 4, "w": 24, "x": 0, "y": 13 },
+          "id": 6,
+          "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "horizontal", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
+          "targets": [
+            { "expr": "sum(kube_pod_container_status_restarts_total{namespace=\"apps\", pod=~\"note-rag.*\"})", "legendFormat": "note-rag", "refId": "A" },
+            { "expr": "sum(kube_pod_container_status_restarts_total{namespace=\"apps\", pod=~\"portfolio.*\"})", "legendFormat": "portfolio", "refId": "B" },
+            { "expr": "sum(kube_pod_container_status_restarts_total{namespace=\"apps\", pod=~\"n8n.*\"})", "legendFormat": "n8n", "refId": "C" }
+          ],
+          "title": "Container Restarts (total)",
+          "type": "stat"
+        }
+      ],
+      "refresh": "30s",
+      "schemaVersion": 38,
+      "tags": ["apps", "note-rag", "portfolio-tracker", "n8n"],
+      "templating": { "list": [] },
+      "time": { "from": "now-1h", "to": "now" },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "Applications",
+      "uid": "apps-dashboard",
+      "version": 2
+    }
