@@ -1,0 +1,15 @@
+# Helm
+*.tgz
+charts/
+
+# Secrets
+*-secret.yaml
+secrets/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
