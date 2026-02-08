@@ -170,7 +170,7 @@ data:
           "gridPos": { "h": 3, "w": 8, "x": 0, "y": 2 },
           "id": 1,
           "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
-          "targets": [{ "expr": "kube_pod_status_phase{namespace=\"apps\", pod=~\"note-rag-api.*\", phase=\"Running\"}", "refId": "A" }],
+          "targets": [{ "expr": "kube_pod_status_phase{namespace=\"apps\", pod=~\"note-rag.*\", phase=\"Running\"}", "refId": "A" }],
           "title": "📝 Note-RAG",
           "type": "stat"
         },
@@ -228,7 +228,7 @@ data:
           "id": 4,
           "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
           "targets": [
-            { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"note-rag-api.*\", container!=\"\"}) by (pod)", "legendFormat": "note-rag", "refId": "A" },
+            { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"note-rag.*\", container!=\"\"}) by (pod)", "legendFormat": "note-rag", "refId": "A" },
             { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"portfolio-tracker-backend.*\", container!=\"\"}) by (pod)", "legendFormat": "portfolio", "refId": "B" },
             { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"n8n.*\", container!=\"\"}) by (pod)", "legendFormat": "n8n", "refId": "C" },
             { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"note-rag-ollama.*\", container!=\"\"}) by (pod)", "legendFormat": "ollama", "refId": "D" }
@@ -252,7 +252,7 @@ data:
           "id": 5,
           "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
           "targets": [
-            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"note-rag-api.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "note-rag", "refId": "A" },
+            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"note-rag.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "note-rag", "refId": "A" },
             { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"portfolio-tracker-backend.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "portfolio", "refId": "B" },
             { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"n8n.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "n8n", "refId": "C" },
             { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"note-rag-ollama.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "ollama", "refId": "D" }
