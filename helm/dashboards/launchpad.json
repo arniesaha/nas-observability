@@ -21,7 +21,7 @@
       "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
       "id": 1,
       "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
-      "targets": [{ "expr": "kube_job_status_succeeded{namespace=\"apps\", job_name=~\"job-hunter.*\"}", "legendFormat": "Last Run", "refId": "A" }],
+      "targets": [{ "expr": "kube_job_status_succeeded{namespace=\"apps\", job_name=~\"launchpad.*\"}", "legendFormat": "Last Run", "refId": "A" }],
       "title": "Last Run Status",
       "type": "stat"
     },
@@ -37,7 +37,7 @@
       "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
       "id": 2,
       "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
-      "targets": [{ "expr": "sum(kube_job_status_succeeded{namespace=\"apps\", job_name=~\"job-hunter.*\"})", "legendFormat": "Successful", "refId": "A" }],
+      "targets": [{ "expr": "sum(kube_job_status_succeeded{namespace=\"apps\", job_name=~\"launchpad.*\"})", "legendFormat": "Successful", "refId": "A" }],
       "title": "Total Successful Runs",
       "type": "stat"
     },
@@ -54,7 +54,7 @@
       "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
       "id": 3,
       "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
-      "targets": [{ "expr": "sum(kube_job_status_failed{namespace=\"apps\", job_name=~\"job-hunter.*\"})", "legendFormat": "Failed", "refId": "A" }],
+      "targets": [{ "expr": "sum(kube_job_status_failed{namespace=\"apps\", job_name=~\"launchpad.*\"})", "legendFormat": "Failed", "refId": "A" }],
       "title": "Total Failed Runs",
       "type": "stat"
     },
@@ -70,7 +70,7 @@
       "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
       "id": 4,
       "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
-      "targets": [{ "expr": "max(kube_job_status_completion_time{namespace=\"apps\", job_name=~\"job-hunter.*\"} - kube_job_status_start_time{namespace=\"apps\", job_name=~\"job-hunter.*\"})", "legendFormat": "Duration", "refId": "A" }],
+      "targets": [{ "expr": "max(kube_job_status_completion_time{namespace=\"apps\", job_name=~\"launchpad.*\"} - kube_job_status_start_time{namespace=\"apps\", job_name=~\"launchpad.*\"})", "legendFormat": "Duration", "refId": "A" }],
       "title": "Last Run Duration",
       "type": "stat"
     },
@@ -108,8 +108,8 @@
       "id": 5,
       "options": { "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "single", "sort": "none" } },
       "targets": [
-        { "expr": "sum(increase(kube_job_status_succeeded{namespace=\"apps\", job_name=~\"job-hunter.*\"}[1d]))", "legendFormat": "Succeeded", "refId": "A" },
-        { "expr": "sum(increase(kube_job_status_failed{namespace=\"apps\", job_name=~\"job-hunter.*\"}[1d]))", "legendFormat": "Failed", "refId": "B" }
+        { "expr": "sum(increase(kube_job_status_succeeded{namespace=\"apps\", job_name=~\"launchpad.*\"}[1d]))", "legendFormat": "Succeeded", "refId": "A" },
+        { "expr": "sum(increase(kube_job_status_failed{namespace=\"apps\", job_name=~\"launchpad.*\"}[1d]))", "legendFormat": "Failed", "refId": "B" }
       ],
       "title": "Job Runs (Daily)",
       "type": "timeseries"
@@ -147,7 +147,7 @@
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
       "id": 6,
       "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "single", "sort": "none" } },
-      "targets": [{ "expr": "kube_job_status_completion_time{namespace=\"apps\", job_name=~\"job-hunter.*\"} - kube_job_status_start_time{namespace=\"apps\", job_name=~\"job-hunter.*\"}", "legendFormat": "{{ job_name }}", "refId": "A" }],
+      "targets": [{ "expr": "kube_job_status_completion_time{namespace=\"apps\", job_name=~\"launchpad.*\"} - kube_job_status_start_time{namespace=\"apps\", job_name=~\"launchpad.*\"}", "legendFormat": "{{ job_name }}", "refId": "A" }],
       "title": "Run Duration History",
       "type": "timeseries"
     },
@@ -167,7 +167,7 @@
       "gridPos": { "h": 8, "w": 24, "x": 0, "y": 12 },
       "id": 7,
       "options": { "footer": { "fields": "", "reducer": ["sum"], "show": false }, "showHeader": true },
-      "targets": [{ "expr": "kube_job_info{namespace=\"apps\", job_name=~\"job-hunter.*\"}", "format": "table", "instant": true, "refId": "A" }],
+      "targets": [{ "expr": "kube_job_info{namespace=\"apps\", job_name=~\"launchpad.*\"}", "format": "table", "instant": true, "refId": "A" }],
       "title": "Recent Jobs",
       "transformations": [
         { "id": "organize", "options": { "excludeByName": { "Time": true, "Value": true, "__name__": true, "container": true, "endpoint": true, "instance": true, "job": true, "namespace": true, "pod": true, "service": true, "uid": true }, "indexByName": {}, "renameByName": { "job_name": "Job Name" } } }
@@ -207,7 +207,7 @@
       "gridPos": { "h": 6, "w": 12, "x": 0, "y": 20 },
       "id": 8,
       "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "single", "sort": "none" } },
-      "targets": [{ "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"job-hunter.*\"})", "legendFormat": "Memory", "refId": "A" }],
+      "targets": [{ "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"launchpad.*\"})", "legendFormat": "Memory", "refId": "A" }],
       "title": "Pod Memory Usage",
       "type": "timeseries"
     },
@@ -244,7 +244,7 @@
       "gridPos": { "h": 6, "w": 12, "x": 12, "y": 20 },
       "id": 9,
       "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "single", "sort": "none" } },
-      "targets": [{ "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"job-hunter.*\"}[5m]))", "legendFormat": "CPU", "refId": "A" }],
+      "targets": [{ "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"launchpad.*\"}[5m]))", "legendFormat": "CPU", "refId": "A" }],
       "title": "Pod CPU Usage",
       "type": "timeseries"
     }
@@ -252,13 +252,13 @@
   "refresh": "30s",
   "schemaVersion": 38,
   "style": "dark",
-  "tags": ["job-hunter", "cronjob", "apps"],
+  "tags": ["launchpad", "cronjob", "apps"],
   "templating": { "list": [] },
   "time": { "from": "now-7d", "to": "now" },
   "timepicker": {},
   "timezone": "America/Los_Angeles",
-  "title": "Job Hunter Agent",
-  "uid": "job-hunter-agent",
+  "title": "Launchpad Agent",
+  "uid": "launchpad-agent",
   "version": 1,
   "weekStart": ""
 }
