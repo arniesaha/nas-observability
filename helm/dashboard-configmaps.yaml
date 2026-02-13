@@ -170,8 +170,8 @@ data:
           "gridPos": { "h": 3, "w": 8, "x": 0, "y": 2 },
           "id": 1,
           "options": { "colorMode": "background", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
-          "targets": [{ "expr": "kube_pod_status_phase{namespace=\"apps\", pod=~\"note-rag.*\", phase=\"Running\"}", "refId": "A" }],
-          "title": "📝 Note-RAG",
+          "targets": [{ "expr": "kube_pod_status_phase{namespace=\"apps\", pod=~\"recall.*\", phase=\"Running\"}", "refId": "A" }],
+          "title": "🧠 Recall",
           "type": "stat"
         },
         {
@@ -228,10 +228,10 @@ data:
           "id": 4,
           "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
           "targets": [
-            { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"note-rag.*\", container!=\"\"}) by (pod)", "legendFormat": "note-rag", "refId": "A" },
+            { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"recall.*\", container!=\"\"}) by (pod)", "legendFormat": "recall", "refId": "A" },
             { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"portfolio-tracker-backend.*\", container!=\"\"}) by (pod)", "legendFormat": "portfolio", "refId": "B" },
             { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"n8n.*\", container!=\"\"}) by (pod)", "legendFormat": "n8n", "refId": "C" },
-            { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"note-rag-ollama.*\", container!=\"\"}) by (pod)", "legendFormat": "ollama", "refId": "D" }
+            { "expr": "sum(container_memory_working_set_bytes{namespace=\"apps\", pod=~\"recall-ollama.*\", container!=\"\"}) by (pod)", "legendFormat": "ollama", "refId": "D" }
           ],
           "title": "Memory Usage",
           "type": "timeseries"
@@ -252,10 +252,10 @@ data:
           "id": 5,
           "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" } },
           "targets": [
-            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"note-rag.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "note-rag", "refId": "A" },
+            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"recall.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "recall", "refId": "A" },
             { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"portfolio-tracker-backend.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "portfolio", "refId": "B" },
             { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"n8n.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "n8n", "refId": "C" },
-            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"note-rag-ollama.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "ollama", "refId": "D" }
+            { "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"apps\", pod=~\"recall-ollama.*\", container!=\"\"}[5m])) by (pod) * 1000", "legendFormat": "ollama", "refId": "D" }
           ],
           "title": "CPU Usage (millicores)",
           "type": "timeseries"
@@ -274,7 +274,7 @@ data:
           "id": 6,
           "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "horizontal", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" },
           "targets": [
-            { "expr": "sum(kube_pod_container_status_restarts_total{namespace=\"apps\", pod=~\"note-rag.*\"})", "legendFormat": "note-rag", "refId": "A" },
+            { "expr": "sum(kube_pod_container_status_restarts_total{namespace=\"apps\", pod=~\"recall.*\"})", "legendFormat": "recall", "refId": "A" },
             { "expr": "sum(kube_pod_container_status_restarts_total{namespace=\"apps\", pod=~\"portfolio.*\"})", "legendFormat": "portfolio", "refId": "B" },
             { "expr": "sum(kube_pod_container_status_restarts_total{namespace=\"apps\", pod=~\"n8n.*\"})", "legendFormat": "n8n", "refId": "C" }
           ],
@@ -284,7 +284,7 @@ data:
       ],
       "refresh": "30s",
       "schemaVersion": 38,
-      "tags": ["apps", "note-rag", "portfolio-tracker", "n8n"],
+      "tags": ["apps", "recall", "portfolio-tracker", "n8n"],
       "templating": { "list": [] },
       "time": { "from": "now-1h", "to": "now" },
       "timepicker": {},
@@ -573,17 +573,17 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: dashboard-note-rag
+  name: dashboard-recall
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
 data:
-  note-rag-dashboard.json: |
+  recall-dashboard.json: |
     {
       "annotations": {
         "list": []
       },
-      "description": "note-rag Personal Knowledge RAG System",
+      "description": "Recall Personal Knowledge System System",
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
@@ -814,7 +814,7 @@ data:
       "refresh": "30s",
       "schemaVersion": 38,
       "style": "dark",
-      "tags": ["note-rag", "rag", "knowledge-base"],
+      "tags": ["recall", "rag", "knowledge-base"],
       "templating": {
         "list": [
           {
@@ -836,8 +836,8 @@ data:
       "time": { "from": "now-6h", "to": "now" },
       "timepicker": {},
       "timezone": "",
-      "title": "note-rag - Personal Knowledge RAG",
-      "uid": "note-rag-dashboard",
+      "title": "Recall - Personal Knowledge System",
+      "uid": "recall-dashboard",
       "version": 1,
       "weekStart": ""
     }
